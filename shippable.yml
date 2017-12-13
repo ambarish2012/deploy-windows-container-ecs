@@ -24,8 +24,8 @@ jobs:
 
   - name: node_windows_deploy
     type: deploy
+    method: replace
     steps:
       - IN: node_windows_manifest
       - IN: node_windows_cluster
-      - TASK: managed
-        deployMethod: replace
+        
