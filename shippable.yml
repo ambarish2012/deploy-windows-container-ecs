@@ -1,0 +1,31 @@
+resources:
+
+  - name: node_windows_img
+    type: image
+    integration: dr_dockerhub
+    pointer:
+      sourceName: "stefanscherer/node-windows"
+    seed:
+      versionName: "latest"
+
+  - name: node_windows_cluster
+    type: cluster
+    integration: dr-aws-keys
+    pointer:
+      sourceName : "node-windows-cluster" #name of the cluster to which we are deploying
+      region: "us-east-1"
+
+jobs:
+
+  - name: node_windows_manifest
+    type: manifest
+    steps:
+     - IN: node_windows_img
+
+  - name: node_windows_deploy
+    type: deploy
+    steps:
+      - IN: node_windows_manifest
+      - IN: node_windows_cluster
+      - TASK: managed
+        deployMethod: replace
